@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expenses — FinTrack</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="particle-canvas"></canvas>
+  <div class="grid-bg"></div>
+  <div class="noise"></div>
+
+  <nav class="nav">
+    <div class="nav-logo"><div class="logo-icon">💎</div>FinTrack</div>
+    <div class="nav-links">
+      <a href="index.html"><span class="nav-icon">🏠</span> Home</a>
+      <a href="dashboard.html"><span class="nav-icon">📊</span> Dashboard</a>
+      <a href="expenses.html" class="active"><span class="nav-icon">💸</span> Expenses</a>
+      <a href="budget.html"><span class="nav-icon">🎯</span> Budget</a>
+      <a href="savings.html"><span class="nav-icon">🏦</span> Savings</a>
+      <a href="reports.html"><span class="nav-icon">📈</span> Reports</a>
+      <a href="learn.html"><span class="nav-icon">🧠</span> Learn</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-balance">Balance: <span id="nav-balance-val">₹—</span></div>
+      <button class="mobile-nav-toggle" id="mobile-nav-toggle">☰</button>
+    </div>
+  </nav>
+  <div class="mobile-nav-menu" id="mobile-nav-menu">
+    <a href="index.html">🏠 Home</a>
+    <a href="dashboard.html">📊 Dashboard</a>
+    <a href="expenses.html" class="active">💸 Expenses</a>
+    <a href="budget.html">🎯 Budget</a>
+    <a href="savings.html">🏦 Savings</a>
+    <a href="reports.html">📈 Reports</a>
+    <a href="learn.html">🧠 Learn</a>
+  </div>
+
+  <div class="main-content">
+    <div class="page-container">
+
+      <div class="page-header animate-in">
+        <h1>💸 <span class="gradient-text-pink">Expense</span> Tracker</h1>
+        <p>Log, manage and analyze every expense with smart categorization</p>
+      </div>
+
+      <!-- Category Summary Cards -->
+      <div id="expense-cat-summary" class="stat-grid mb-4"></div>
+
+      <!-- Add Expense -->
+      <div class="glass-card card-p mb-4 animate-in delay-1">
+        <div class="section-title">
+          <div class="title-accent"></div>
+          Add New Expense
+        </div>
+        <form id="expense-form">
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:1rem">
+            <div class="form-group" style="margin:0">
+              <label class="form-label">Description</label>
+              <input name="description" class="form-control" placeholder="What did you spend on?" />
+            </div>
+            <div class="form-group" style="margin:0">
+              <label class="form-label">Amount (₹) *</label>
+              <input name="amount" type="number" class="form-control" placeholder="0" min="1" required />
+            </div>
+            <div class="form-group" style="margin:0">
+              <label class="form-label">Category *</label>
+              <select name="category" class="form-control" required>
+                <option value="food">🍔 Food</option>
+                <option value="travel">🚌 Travel</option>
+                <option value="books">📚 Books</option>
+                <option value="entertainment">🎮 Entertainment</option>
+                <option value="stationery">✏️ Stationery</option>
+                <option value="other">📦 Other</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin:0">
+              <label class="form-label">Date</label>
+              <input name="date" type="date" class="form-control" id="exp-date" />
+            </div>
+          </div>
+          <div style="margin-top:1rem;display:flex;justify-content:flex-end">
+            <button type="submit" class="btn btn-primary btn-lg">+ Add Expense</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Filters & Search -->
+      <div class="glass-card card-p animate-in delay-2">
+        <div class="flex-between mb-3" style="flex-wrap:wrap;gap:1rem">
+          <div class="section-title" style="margin:0">
+            <div class="title-accent"></div>
+            All Expenses
+            <span class="text-muted text-sm" style="font-family:var(--font-body);font-weight:400">
+              (<span id="exp-total-count">0</span> items · <span id="exp-total-amt">₹0</span>)
+            </span>
+          </div>
+          <input type="text" id="exp-search" class="form-control" placeholder="🔍 Search expenses..." style="width:220px" />
+        </div>
+
+        <!-- Category filters -->
+        <div class="filter-row">
+          <span class="text-muted text-sm" style="font-weight:600">Filter:</span>
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="food">🍔 Food</button>
+          <button class="filter-btn" data-filter="travel">🚌 Travel</button>
+          <button class="filter-btn" data-filter="books">📚 Books</button>
+          <button class="filter-btn" data-filter="entertainment">🎮 Entertainment</button>
+          <button class="filter-btn" data-filter="stationery">✏️ Stationery</button>
+          <button class="filter-btn" data-filter="other">📦 Other</button>
+        </div>
+
+        <!-- Sort -->
+        <div class="filter-row" style="margin-top:0">
+          <span class="text-muted text-sm" style="font-weight:600">Sort:</span>
+          <button class="filter-btn active" data-sort="newest">Newest</button>
+          <button class="filter-btn" data-sort="oldest">Oldest</button>
+          <button class="filter-btn" data-sort="highest">Highest</button>
+          <button class="filter-btn" data-sort="lowest">Lowest</button>
+        </div>
+
+        <div style="overflow-x:auto">
+          <table class="data-table w-full">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="expense-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
