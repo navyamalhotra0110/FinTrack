@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budget — FinTrack</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="particle-canvas"></canvas>
+  <div class="grid-bg"></div>
+  <div class="noise"></div>
+
+  <nav class="nav">
+    <div class="nav-logo"><div class="logo-icon">💎</div>FinTrack</div>
+    <div class="nav-links">
+      <a href="index.html"><span class="nav-icon">🏠</span> Home</a>
+      <a href="dashboard.html"><span class="nav-icon">📊</span> Dashboard</a>
+      <a href="expenses.html"><span class="nav-icon">💸</span> Expenses</a>
+      <a href="budget.html" class="active"><span class="nav-icon">🎯</span> Budget</a>
+      <a href="savings.html"><span class="nav-icon">🏦</span> Savings</a>
+      <a href="reports.html"><span class="nav-icon">📈</span> Reports</a>
+      <a href="learn.html"><span class="nav-icon">🧠</span> Learn</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-balance">Balance: <span id="nav-balance-val">₹—</span></div>
+      <button class="mobile-nav-toggle" id="mobile-nav-toggle">☰</button>
+    </div>
+  </nav>
+  <div class="mobile-nav-menu" id="mobile-nav-menu">
+    <a href="index.html">🏠 Home</a>
+    <a href="dashboard.html">📊 Dashboard</a>
+    <a href="expenses.html">💸 Expenses</a>
+    <a href="budget.html" class="active">🎯 Budget</a>
+    <a href="savings.html">🏦 Savings</a>
+    <a href="reports.html">📈 Reports</a>
+    <a href="learn.html">🧠 Learn</a>
+  </div>
+
+  <div class="main-content">
+    <div class="page-container">
+
+      <div class="page-header animate-in">
+        <h1>🎯 <span class="gradient-text">Budget</span> Planner</h1>
+        <p>Set your monthly budget and control spending per category</p>
+      </div>
+
+      <!-- Overview Cards -->
+      <div class="stat-grid mb-4">
+        <div class="glass-card stat-card cyan animate-in">
+          <div class="glow-orb"></div>
+          <div class="stat-label">💰 Total Budget</div>
+          <div class="stat-value" id="bud-total-val">₹0</div>
+          <div class="stat-sub">Monthly limit</div>
+        </div>
+        <div class="glass-card stat-card pink animate-in delay-1">
+          <div class="glow-orb"></div>
+          <div class="stat-label">💸 Total Spent</div>
+          <div class="stat-value" id="bud-spent-val">₹0</div>
+          <div class="stat-sub">This month</div>
+        </div>
+        <div class="glass-card stat-card green animate-in delay-2">
+          <div class="glow-orb"></div>
+          <div class="stat-label">✅ Remaining</div>
+          <div class="stat-value" id="bud-remaining-val">₹0</div>
+          <div class="stat-sub">Available to spend</div>
+        </div>
+      </div>
+
+      <!-- Total Budget Setter -->
+      <div class="glass-card card-p mb-4 animate-in delay-1">
+        <div class="section-title"><div class="title-accent"></div>Monthly Budget Amount</div>
+        <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+          <div style="flex:1;min-width:200px">
+            <label class="form-label">Total Monthly Budget (₹)</label>
+            <input type="number" id="budget-total-input" class="form-control" min="0" placeholder="Enter your monthly budget" style="font-size:1.2rem;font-weight:700" />
+          </div>
+          <div style="padding-top:1.5rem;color:var(--text-secondary);font-size:0.9rem;line-height:1.6;max-width:400px">
+            💡 <strong style="color:var(--text-primary)">Tip:</strong> Set a realistic budget based on your monthly income from pocket money, scholarships, or part-time work. Then allocate it across categories below.
+          </div>
+        </div>
+        <!-- Main progress bar -->
+        <div style="margin-top:1.5rem">
+          <div class="flex-between mb-1">
+            <span class="text-sm font-bold">Overall Usage</span>
+            <span class="font-bold text-cyan" id="main-budget-pct">0%</span>
+          </div>
+          <div class="progress-track" style="height:14px;border-radius:7px">
+            <div class="progress-fill cyan" id="main-budget-bar" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Budgets -->
+      <div class="glass-card card-p animate-in delay-2">
+        <div class="flex-between mb-3">
+          <div class="section-title" style="margin:0">
+            <div class="title-accent"></div>
+            Category Budgets
+          </div>
+          <span class="text-muted text-sm">Edit the input fields on the right to change limits</span>
+        </div>
+        <div id="budget-cat-list" class="budget-category-list"></div>
+      </div>
+
+      <!-- Budget Tips -->
+      <div class="glass-card card-p mt-4 animate-in delay-3">
+        <div class="section-title"><div class="title-accent"></div>💡 Budgeting Tips for Students</div>
+        <div class="grid-2">
+          <div class="tip-card"><strong>50/30/20 Rule</strong> — Spend 50% on needs (food, travel), 30% on wants (entertainment), and save 20%.</div>
+          <div class="tip-card"><strong>Track Daily</strong> — Even small expenses add up fast. Log every purchase — that daily chai can be ₹600/month!</div>
+          <div class="tip-card"><strong>Plan Ahead</strong> — Know your exam seasons. Books and stationery cost more at semester start. Budget accordingly.</div>
+          <div class="tip-card"><strong>Avoid Impulse Buys</strong> — Wait 24 hours before any unplanned purchase over ₹500. You'll skip 80% of them.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
