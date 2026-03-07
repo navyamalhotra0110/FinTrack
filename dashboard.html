@@ -24,7 +24,7 @@
       <a href="learn.html"><span class="nav-icon">🧠</span> Learn</a>
     </div>
     <div class="nav-right">
-      <div class="nav-balance">Balance: <span id="nav-balance-val">₹—</span></div>
+      <div class="nav-balance">Balance: <span id="nav-balance-val">—</span></div>
       <button class="mobile-nav-toggle" id="mobile-nav-toggle">☰</button>
     </div>
   </nav>
@@ -48,7 +48,7 @@
           <p>Here's your financial overview for <span id="current-month-label"></span></p>
         </div>
         <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
-          <a href="expenses.html" class="btn btn-primary">+ Add Expense</a>
+          <a href="expenses.html" class="btn btn-primary">💸 Add Expense</a>
           <button class="btn btn-secondary" onclick="openModal('income-modal')">💰 Add Income</button>
         </div>
       </div>
@@ -130,42 +130,6 @@
 
       </div>
 
-      <!-- Quick Add Expense -->
-      <div class="glass-card card-p mb-4 animate-in">
-        <div class="section-title">
-          <div class="title-accent"></div>
-          Quick Add Expense
-        </div>
-        <form id="quick-expense-form">
-          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:0.75rem;align-items:end">
-            <div class="form-group" style="margin:0">
-              <label class="form-label">Description</label>
-              <input name="description" class="form-control" placeholder="e.g. Canteen lunch" />
-            </div>
-            <div class="form-group" style="margin:0">
-              <label class="form-label">Amount (₹)</label>
-              <input name="amount" type="number" class="form-control" placeholder="0" min="1" required />
-            </div>
-            <div class="form-group" style="margin:0">
-              <label class="form-label">Category</label>
-              <select name="category" class="form-control">
-                <option value="food">🍔 Food</option>
-                <option value="travel">🚌 Travel</option>
-                <option value="books">📚 Books</option>
-                <option value="entertainment">🎮 Entertainment</option>
-                <option value="stationery">✏️ Stationery</option>
-                <option value="other">📦 Other</option>
-              </select>
-            </div>
-            <div class="form-group" style="margin:0">
-              <label class="form-label">Date</label>
-              <input name="date" type="date" class="form-control" />
-            </div>
-            <button type="submit" class="btn btn-primary" style="height:44px;white-space:nowrap">+ Add</button>
-          </div>
-        </form>
-      </div>
-
       <!-- Recent Transactions -->
       <div class="glass-card animate-in">
         <div style="padding:1.5rem 1.5rem 1rem;display:flex;align-items:center;justify-content:space-between">
@@ -230,7 +194,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="app.js"></script>
   <script>
-    // Greeting & date
+    // Greeting & date (runs immediately, before DOMContentLoaded)
     const hour = new Date().getHours();
     const greetEl = document.getElementById('greeting-time');
     if (greetEl) greetEl.textContent = hour < 12 ? 'Morning' : hour < 17 ? 'Afternoon' : 'Evening';
@@ -239,26 +203,6 @@
       const d = new Date();
       monthLabel.textContent = d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
     }
-    // Set default date for quick form
-    document.addEventListener('DOMContentLoaded', () => {
-      const dateInputs = document.querySelectorAll('input[type="date"]');
-      dateInputs.forEach(inp => { if (!inp.value) inp.value = new Date().toISOString().split('T')[0]; });
-      // Update prog labels
-      const updateProgs = () => {
-        const user = Auth.getUser();
-        if (!user) return;
-        const bud = state.budget;
-        const expenses = state.expenses;
-        const now = new Date();
-        const month = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
-        const spent = expenses.filter(e=>e.date&&e.date.startsWith(month)).reduce((s,e)=>s+(+e.amount),0);
-        const ps = document.getElementById('prog-spent');
-        const pb = document.getElementById('prog-budget');
-        if (ps) ps.textContent = '₹' + spent.toLocaleString('en-IN');
-        if (pb) pb.textContent = '₹' + (bud.total||0).toLocaleString('en-IN');
-      };
-      updateProgs();
-    });
   </script>
 </body>
 </html>
