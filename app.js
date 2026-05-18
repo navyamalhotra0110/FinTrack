@@ -1243,19 +1243,20 @@ function renderReports(month) {
   const catTotals = totalByCategory(expenses);
   const total = totalExpenses(expenses);
   const monthlyBudget = state.budget.total || 0;
-  const budgetLeft = money(monthlyBudget - total);
+  const inc = totalIncome(month);
+  const moneyLeft = money(monthlyBudget + inc - total);
   const allCats = getAllCategories();
 
   animateCount('rep-total-spent', total);
-  animateCount('rep-total-income', Math.max(0, budgetLeft));
-  animateCount('rep-net', budgetLeft);
+  animateCount('rep-total-income', Math.max(0, moneyLeft));
+  animateCount('rep-net', moneyLeft);
 
   // Colour the Budget Left card red if over budget
   const budLeftEl = $('rep-total-income');
-  if (budLeftEl) budLeftEl.style.color = budgetLeft < 0 ? 'var(--pink)' : '';
+  if (budLeftEl) budLeftEl.style.color = moneyLeft < 0 ? 'var(--pink)' : '';
   // Colour Net Balance red if negative
   const netEl = $('rep-net');
-  if (netEl) netEl.style.color = budgetLeft < 0 ? 'var(--pink)' : 'var(--cyan)';
+  if (netEl) netEl.style.color = moneyLeft < 0 ? 'var(--pink)' : 'var(--cyan)';
 
   renderPieChart('rep-pie', catTotals);
   renderBarChart('rep-bar');
