@@ -23,7 +23,7 @@
       <a href="learn.html"><span class="nav-icon">🧠</span> Learn</a>
     </div>
     <div class="nav-right">
-      <div class="nav-balance">Balance: <span id="nav-balance-val">₹—</span></div>
+      <div class="nav-balance">Balance: <span id="nav-balance-val">—</span></div>
       <button class="mobile-nav-toggle" id="mobile-nav-toggle">☰</button>
     </div>
   </nav>
@@ -61,15 +61,15 @@
         </div>
         <div class="glass-card stat-card green animate-in delay-1">
           <div class="glow-orb"></div>
-          <div class="stat-label">📥 Total Income</div>
+          <div class="stat-label">🎯 Budget Left</div>
           <div class="stat-value" id="rep-total-income">₹0</div>
-          <div class="stat-sub">Recorded income</div>
+          <div class="stat-sub">Remaining from budget</div>
         </div>
         <div class="glass-card stat-card cyan animate-in delay-2">
           <div class="glow-orb"></div>
           <div class="stat-label">💎 Net Balance</div>
           <div class="stat-value" id="rep-net">₹0</div>
-          <div class="stat-sub">Income − Expenses</div>
+          <div class="stat-sub">Budget − Expenses</div>
         </div>
       </div>
 
@@ -132,11 +132,5 @@
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="app.js"></script>
-  <script>
-    // Also render line chart after reports init
-    document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => renderLineChart('rep-line'), 300);
-    });
-  </script>
 </body>
 </html>
