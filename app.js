@@ -157,7 +157,7 @@ function injectProfileModal() {
       </div>
       <div class="form-group">
         <label class="form-label">Your Name *</label>
-        <input id="onboard-name" class="form-control" placeholder="e.g. Navya" maxlength="30" required style="font-size:1.1rem" />
+        <input id="onboard-name" class="form-control" placeholder="e.g. riya" maxlength="30" required style="font-size:1.1rem" />
       </div>
       <div class="form-group">
         <label class="form-label">Pick Your Avatar</label>
